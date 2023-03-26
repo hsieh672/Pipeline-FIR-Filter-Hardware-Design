@@ -81,3 +81,14 @@ The choice of fixed-point word-length is based on the C# simulation result, whic
 |-------------|---------|---------|---------|
 | C#          | 50.1709 | 50.0973 | 50.1248 |
 | Verilog     | 48.6986 | 48.7159 | 48.6825 |
+
+## Hardware design
+![HD](https://github.com/hsieh672/Pipeline-FIR-filter/blob/main/imag/HWDesign.png)  
+In the FIR filter architecture shown above, i represents the computation of the i+1th tap, where i = [0:33], for a total of 34 taps. In the upper part of the structure, the output dp_i is the input signal of the next pipeline stage's added D-flip flop. In the lower part of the structure, d(i) is the input signal of the next pipeline stage's added D-flip flop.
+
+Multiplication is calculated using 2's complement for both positive and negative input data. If the input data is negative, it is first converted to a positive value before multiplication, and all multiplication operations are performed through logical operations.
+
+Because the FIR filter coefficients have a symmetric property, only 17 registers are needed to store the coefficient values, reducing hardware usage costs. Specifically, coefficients h17~h0 are reused in taps 18-34.  
+## Verilog simulation
+X is the input signal, dataout is the output signal, i is the total number of input data, and j is the index of the current input/output data in the total dataset.  
+!simulation](https://github.com/hsieh672/Pipeline-FIR-filter/blob/main/imag/simulation.png)  
