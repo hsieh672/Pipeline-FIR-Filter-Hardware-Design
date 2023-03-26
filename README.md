@@ -92,7 +92,10 @@ Because the FIR filter coefficients have a symmetric property, only 17 registers
 ## Verilog simulation
 X is the input signal, dataout is the output signal, i is the total number of input data, and j is the index of the current input/output data in the total dataset.  
 ![simulation](https://github.com/hsieh672/Pipeline-FIR-filter/blob/main/imag/simulation.png)  
+
 ## Synthesis
 ![synthesis](https://github.com/hsieh672/Pipeline-FIR-filter/blob/main/imag/synthesis.png)  
-Here I have included the transposed form for comparison, and the clock speed of the transposed form and pipeline architecture has increased by approximately 4.5 times. The clock period is the time required for one multiplier and one adder to complete their operation. The speedup achieved is as expected. Although the number of clock cycles required from input to output in the pipeline architecture has increased, the latency is reduced due to the increased clock speed, resulting in a throughput improvement of approximately 2 times.  
+
+Here I have included the transposed form for comparison, and the clock speed of the transposed form and pipeline architecture has increased by approximately 4.5 times. The clock period is the time required for one multiplier and one adder to complete their operation. The speedup achieved is as expected.  
+Although the number of clock cycles required from input to output in the pipeline architecture has increased, the latency is reduced due to the increased clock speed, resulting in a throughput improvement of approximately 2 times.  
 
