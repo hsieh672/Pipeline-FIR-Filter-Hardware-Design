@@ -28,7 +28,19 @@ To generate a FIR low-pass filter with minimum tap count, use the firceqrip() fu
 | h14    | -0.034753709 | h31    | 0.007508142  |
 | h15    | 0.185931227  | h32    | 0.006687062  |
 | h16    | 0.402422410  | h33    | -0.003228676 |
+## Floating-point and Fixed-point simulation results
+Generate three sets of random signed-value signals with a data size of 50,000 each. The following is the simulation result for one of the sets of data.  
+![floating](https://github.com/hsieh672/Pipeline-FIR-filter/blob/main/imag/floating.png)  
 
+In fixed-point simulation, because the input signal is random signed-value signals ranging from 0 to 1, a larger number of bits is required to approach saturation for SNR. In order to balance hardware costs and meet the target specifications, a word-length design of 13 bits is adopted, which includes 1 signed-bit, 1 integer part bit, and 11 fractional part bits.  
+![WL](https://github.com/hsieh672/Pipeline-FIR-filter/blob/main/imag/WL.png)  
+![fix](https://github.com/hsieh672/Pipeline-FIR-filter/blob/main/imag/fixed-point.png)  
+
+It is difficult to observe the difference between the simulation results of C# and Verilog after passing through the FIR low-pass filter with naked eyes. However, in terms of SNR comparison, the Verilog simulation result is approximately 1.5 dB lower than the C# simulation result.
+
+It is speculated that the reason for this difference is that quantizing the signal reduces the amount of data, which allows for better results with the same precision in computation. However, when considering the precision of the output data, using unquantized signals can achieve more accurate results.
+
+The choice of fixed-point word-length is based on the C# simulation result, which is approximately 2 least significant bits different from the Verilog simulation result, resulting in a lower SNR value. If the goal is to achieve a 50 dB SNR in Verilog simulation results, a word-length of 14 bits can be used, but this will also increase costs.
 
 
 | SNR\dataset | 1       | 2       | 3       |
