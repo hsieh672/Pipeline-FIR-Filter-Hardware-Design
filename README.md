@@ -7,6 +7,10 @@ In order to reduce the critical path delay, add pipeline to the architecture
 ![pipeline](https://github.com/hsieh672/Pipeline-FIR-filter/blob/main/imag/pipeline.png)  
 ## FIR filter design
 To generate a FIR low-pass filter with minimum tap count, use the firceqrip() function in MATLAB to find the filter coefficients for the specifications of Fs = 8k, fp = 1.5k, and Δf = 0.5k.  
+```sh
+eqnum = firceqrip('minorder',[0.375 0.5],[0.01 0.01]); % eqnum = vec of coeffs
+fvtool(eqnum) % Visualize filter
+```
 ![design](https://github.com/hsieh672/Pipeline-FIR-filter/blob/main/imag/FIR_filter.png)  
 
 | number | coefficients | number | coefficients |
@@ -28,6 +32,36 @@ To generate a FIR low-pass filter with minimum tap count, use the firceqrip() fu
 | h14    | -0.034753709 | h31    | 0.007508142  |
 | h15    | 0.185931227  | h32    | 0.006687062  |
 | h16    | 0.402422410  | h33    | -0.003228676 |
+
+Used the coefficients I obtained above to cinstruct a FIR filter:  
+```sh
+// the FIR filter function
+void firFloat(double *coeffs, double *input, double *output,
+	int length, int filterLength)
+{
+	double acc;     // accumulator
+	double *coeffp; // coefficients
+	double *inputp; // input samples
+	int n;
+	int k;
+
+	memcpy(&insamp[filterLength - 1], input,
+		length * sizeof(double));
+
+	for (n = 0; n < length; n++) {
+		coeffp = coeffs;
+		inputp = &insamp[filterLength - 1 + n];
+		acc = 0;
+		for (k = 0; k < filterLength; k++) {
+			acc += (*coeffp++) * (*inputp--);
+		}
+		output[n] = acc;
+	}
+	memmove(&insamp[0], &insamp[length],
+		(filterLength - 1) * sizeof(double));
+
+}
+```
 ## Floating-point and Fixed-point simulation results
 Generate three sets of random signed-value signals with a data size of 50,000 each. The following is the simulation result for one of the sets of data.  
 ![floating](https://github.com/hsieh672/Pipeline-FIR-filter/blob/main/imag/floating.png)  
