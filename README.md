@@ -1,6 +1,6 @@
 # Pipeline-FIR-filter
 In the FIR low-pass filter, the minimum number of taps is used to achieve an allowed deviation < -40 dB.  
-In order to reduce the critical path delay, add pipeline to the architecture
+In order to reduce the critical path delay, add pipeline to the architecture, the critical path delay from the original 𝑇𝑚𝑢𝑙 + (𝑁 − 1) ∗ 𝑇𝑎𝑑𝑑 to 𝑇𝑚𝑢𝑙 + 𝑇𝑎𝑑𝑑, where N is the number of taps. I expect the SNR to be greater than 50 dB in the fixed-point simulation results, and the clock speed to increase by up to 4 times.  
 ## Block diagraam
 ![direct](https://github.com/hsieh672/Pipeline-FIR-filter/blob/main/imag/direct.png)  
 ![transpose](https://github.com/hsieh672/Pipeline-FIR-filter/blob/main/imag/transpose.png)  
