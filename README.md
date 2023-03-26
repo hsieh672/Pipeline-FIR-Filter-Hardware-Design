@@ -1,7 +1,13 @@
 # Pipeline-FIR-filter
 In the FIR low-pass filter, the minimum number of taps is used to achieve an allowed deviation < -40 dB.  
 In order to reduce the critical path delay, add pipeline to the architecture
-
+## Block diagraam
+![direct](https://github.com/hsieh672/Pipeline-FIR-filter/blob/main/imag/direct.png)  
+![transpose](https://github.com/hsieh672/Pipeline-FIR-filter/blob/main/imag/transpose.png)  
+![pipeline](https://github.com/hsieh672/Pipeline-FIR-filter/blob/main/imag/pipeline.png)  
+## FIR filter design
+To generate a FIR low-pass filter with minimum tap count, use the firceqrip() function in MATLAB to find the filter coefficients for the specifications of Fs = 8k, fp = 1.5k, and Δf = 0.5k.  
+![design](https://github.com/hsieh672/Pipeline-FIR-filter/blob/main/imag/FIR_filter.png)  
 
 | number | coefficients | number | coefficients |
 |--------|--------------|--------|--------------|
